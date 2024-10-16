@@ -52,7 +52,10 @@ def test_pretty_format_yaml_custom_cli_arguments(filename, args, expected_retval
     ("no_pretty_file_name, fixed_file_name"),
     (
         ("not-pretty-formatted.yaml", "not-pretty-formatted_fixed.yaml"),
-        ("multi-doc-not-pretty-formatted.yaml", "multi-doc-not-pretty-formatted_fixed.yaml"),
+        (
+            "multi-doc-not-pretty-formatted.yaml",
+            "multi-doc-not-pretty-formatted_fixed.yaml",
+        ),
     ),
 )
 def test_pretty_format_yaml_autofix(tmpdir, no_pretty_file_name, fixed_file_name):

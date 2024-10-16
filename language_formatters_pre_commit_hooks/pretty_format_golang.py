@@ -12,7 +12,9 @@ def _get_eol_attribute() -> typing.Optional[str]:
     Retrieve eol attribute defined for golang files
     The method will return None in case of any error interacting with git
     """
-    status_code, output, _ = run_command("git", "check-attr", "-z", "eol", "--", "filename.go")
+    status_code, output, _ = run_command(
+        "git", "check-attr", "-z", "eol", "--", "filename.go"
+    )
     if status_code != 0:
         return None
 
@@ -57,7 +59,9 @@ def pretty_format_golang(argv: typing.Optional[typing.List[str]] = None) -> int:
         status = 1
         print(
             "{}: {}".format(
-                "The following files have been fixed by gofmt" if args.autofix else "The following files are not properly formatted",
+                "The following files have been fixed by gofmt"
+                if args.autofix
+                else "The following files are not properly formatted",
                 ", ".join(output.splitlines()),
             ),
         )

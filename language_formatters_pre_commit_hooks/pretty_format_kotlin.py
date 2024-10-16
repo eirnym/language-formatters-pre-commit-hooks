@@ -20,7 +20,9 @@ def _download_ktlint_formatter_jar(version: str) -> str:  # pragma: no cover
 
     url_to_download = get_url(version)
     try:
-        return download_url(get_url(version), "ktlint{version}.jar".format(version=version))
+        return download_url(
+            get_url(version), "ktlint{version}.jar".format(version=version)
+        )
     except:  # noqa: E722 (allow usage of bare 'except')
         raise RuntimeError(
             "Failed to download {url}. Probably the requested version, {version}, is "
@@ -39,7 +41,8 @@ def _download_ktfmt_formatter_jar(version: str) -> str:  # pragma: no cover
         return download_url(url)
     except:  # noqa: E722 (allow usage of bare 'except')
         raise RuntimeError(
-            f"Failed to download {url}. Probably the requested version, {version}" ", is not valid or you have some network issue."
+            f"Failed to download {url}. Probably the requested version, {version}"
+            ", is not valid or you have some network issue."
         )
 
 
@@ -105,14 +108,26 @@ def pretty_format_kotlin(argv: typing.Optional[typing.List[str]] = None) -> int:
     args = parser.parse_args(argv)
     if args.ktfmt:
         jar = args.ktfmt_jar or _download_ktfmt_formatter_jar(args.kftmt_version)
-        return run_ktfmt(jar, args.formatter_jar_checksum, args.filenames, args.ktfmt_style, args.autofix)
+        return run_ktfmt(
+            jar,
+            args.formatter_jar_checksum,
+            args.filenames,
+            args.ktfmt_style,
+            args.autofix,
+        )
     else:
         jar = args.ktlint_jar or _download_ktlint_formatter_jar(args.ktlint_version)
-        return run_ktlint(jar, args.formatter_jar_checksum, args.filenames, args.autofix)
+        return run_ktlint(
+            jar, args.formatter_jar_checksum, args.filenames, args.autofix
+        )
 
 
 def run_ktfmt(
-    jar: str, checksum: typing.Optional[str], filenames: typing.Iterable[str], ktfmt_style: typing.Optional[str], autofix: bool
+    jar: str,
+    checksum: typing.Optional[str],
+    filenames: typing.Iterable[str],
+    ktfmt_style: typing.Optional[str],
+    autofix: bool,
 ) -> int:
     if checksum and not does_checksum_match(jar, checksum):
         return 1
@@ -133,7 +148,12 @@ def run_ktfmt(
     return return_code
 
 
-def run_ktlint(jar: str, checksum: typing.Optional[str], filenames: typing.Iterable[str], autofix: bool):
+def run_ktlint(
+    jar: str,
+    checksum: typing.Optional[str],
+    filenames: typing.Iterable[str],
+    autofix: bool,
+):
     if checksum and not does_checksum_match(jar, checksum):
         return 1
 
@@ -183,7 +203,9 @@ def run_ktlint(jar: str, checksum: typing.Optional[str], filenames: typing.Itera
         status = 1
         print(
             "{}: {}".format(
-                "The following files have been fixed by ktlint" if autofix else "The following files are not properly formatted",
+                "The following files have been fixed by ktlint"
+                if autofix
+                else "The following files are not properly formatted",
                 ", ".join(sorted(not_pretty_formatted_files)),
             ),
         )
