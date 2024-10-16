@@ -218,3 +218,7 @@ Supported styles are google (default), dropbox and kotlinlang
 ## License
 
 `language-formatters-pre-commit-hooks` is licensed with [`Apache License version 2.0`](http://www.apache.org/licenses/LICENSE-2.0.html).
+
+## Origins
+
+This is a hard fork of https://github.com/macisamuele/language-formatters-pre-commit-hooks as paths of this work and theirs are separated.
