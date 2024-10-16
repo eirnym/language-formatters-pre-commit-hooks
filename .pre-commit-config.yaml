@@ -44,7 +44,7 @@ repos:
     exclude: ^test-data/.*$
     args:
     - --autofix
-- repo: https://github.com/ambv/black
+- repo: https://github.com/astral-sh/ruff-pre-commit
   rev: 24.4.2
   hooks:
   - id: black
