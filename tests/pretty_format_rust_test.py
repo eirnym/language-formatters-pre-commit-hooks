@@ -59,17 +59,27 @@ def test_pretty_format_rust_manifest(undecorate_method, filename, expected_retva
 
     manifest_file = os.path.join(manifest_root, "Cargo.toml")
     print(manifest_file)
-    assert undecorate_method(["--manifest-path", manifest_file, filename]) == expected_retval
+    assert (
+        undecorate_method(["--manifest-path", manifest_file, filename])
+        == expected_retval
+    )
 
 
 def test_pretty_format_rust_autofix(tmpdir, undecorate_method):
     copyfile("not-pretty-formatted/Cargo.toml", tmpdir.join("Cargo.toml").strpath)
-    run_autofix_test(tmpdir, undecorate_method, "not-pretty-formatted/src/main.rs", "not-pretty-formatted_fixed/src/main.rs")
+    run_autofix_test(
+        tmpdir,
+        undecorate_method,
+        "not-pretty-formatted/src/main.rs",
+        "not-pretty-formatted_fixed/src/main.rs",
+    )
 
 
 @pytest.mark.xfail
 def test_pretty_format_rust_autofix_subdir_no_manifest_arg(tmpdir, undecorate_method):
-    copyfile("not-pretty-formatted_subdir/Cargo.toml", tmpdir.join("Cargo.toml").strpath)
+    copyfile(
+        "not-pretty-formatted_subdir/Cargo.toml", tmpdir.join("Cargo.toml").strpath
+    )
     run_autofix_test(
         tmpdir.mkdir("src").mkdir("bin"),
         undecorate_method,
@@ -79,7 +89,9 @@ def test_pretty_format_rust_autofix_subdir_no_manifest_arg(tmpdir, undecorate_me
 
 
 def test_pretty_format_rust_autofix_subdir(tmpdir, undecorate_method):
-    copyfile("not-pretty-formatted_subdir/Cargo.toml", tmpdir.join("Cargo.toml").strpath)
+    copyfile(
+        "not-pretty-formatted_subdir/Cargo.toml", tmpdir.join("Cargo.toml").strpath
+    )
     run_autofix_test(
         tmpdir.mkdir("src").mkdir("bin"),
         undecorate_method,

@@ -4,7 +4,9 @@ from unittest.mock import patch
 import pytest
 
 from language_formatters_pre_commit_hooks.pretty_format_golang import _get_eol_attribute
-from language_formatters_pre_commit_hooks.pretty_format_golang import pretty_format_golang
+from language_formatters_pre_commit_hooks.pretty_format_golang import (
+    pretty_format_golang,
+)
 from tests import change_dir_context
 from tests import run_autofix_test
 from tests import undecorate_function
@@ -31,7 +33,10 @@ def undecorate_method():
         (0, "a\0eol\0lf\0", "lf"),
     ],
 )
-@patch("language_formatters_pre_commit_hooks.pretty_format_golang.run_command", autospec=True)
+@patch(
+    "language_formatters_pre_commit_hooks.pretty_format_golang.run_command",
+    autospec=True,
+)
 def test__get_eol_attribute(mock_run_command, exit_status, output, expected_eol):
     mock_run_command.return_value = (exit_status, output, "")
     assert _get_eol_attribute() == expected_eol
@@ -51,4 +56,9 @@ def test_pretty_format_golang(undecorate_method, filename, expected_retval):
 
 
 def test_pretty_format_golang_autofix(tmpdir, undecorate_method):
-    run_autofix_test(tmpdir, undecorate_method, "not-pretty-formatted.go", "not-pretty-formatted_fixed.go")
+    run_autofix_test(
+        tmpdir,
+        undecorate_method,
+        "not-pretty-formatted.go",
+        "not-pretty-formatted_fixed.go",
+    )

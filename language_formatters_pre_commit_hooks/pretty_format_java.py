@@ -34,7 +34,10 @@ def _download_google_java_formatter_jar(version: str) -> str:  # pragma: no cove
     try:
         for url_to_download in possible_urls:
             try:
-                return download_url(url_to_download, "google-java-formatter{version}.jar".format(version=version))
+                return download_url(
+                    url_to_download,
+                    "google-java-formatter{version}.jar".format(version=version),
+                )
             except requests.HTTPError as e:
                 if e.response is None or e.response.status_code != 404:
                     # If the url was not found then move forward with the next links
@@ -65,7 +68,10 @@ def _download_palantir_java_formatter_jar(version: str) -> str:  # pragma: no co
     try:
         for url_to_download in possible_urls:
             try:
-                return download_url(url_to_download, "palantir-java-formatter{version}.jar".format(version=version))
+                return download_url(
+                    url_to_download,
+                    "palantir-java-formatter{version}.jar".format(version=version),
+                )
             except requests.HTTPError as e:
                 if e.response is None or e.response.status_code != 404:
                     # If the url was not found then move forward with the next links
@@ -159,7 +165,9 @@ def format_google(args):
     else:
         google_java_formatter_jar = args.google_java_formatter_jar
 
-    if args.checksum and not does_checksum_match(google_java_formatter_jar, args.checksum):
+    if args.checksum and not does_checksum_match(
+        google_java_formatter_jar, args.checksum
+    ):
         return 1
 
     cmd_args = [

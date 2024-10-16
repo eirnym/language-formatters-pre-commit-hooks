@@ -21,21 +21,28 @@ def pytest_addoption(parser):
 
 
 def pytest_configure(config):
-    config.addinivalue_line("markers", "integration: mark test as integration test (aka. download external resources)")
+    config.addinivalue_line(
+        "markers",
+        "integration: mark test as integration test (aka. download external resources)",
+    )
 
 
 def pytest_collection_modifyitems(config, items):
     if config.getoption("--run-integration"):
         return
 
-    skip_integration = pytest.mark.skip(reason="need --run-integration option to run or CI env variable defined")
+    skip_integration = pytest.mark.skip(
+        reason="need --run-integration option to run or CI env variable defined"
+    )
     for item in items:
         if "integration" in item.keywords:
             item.add_marker(skip_integration)
 
 
 @pytest.fixture
-def ensure_download_possible(tmpdir: py.path.local) -> typing.Generator[None, None, None]:
+def ensure_download_possible(
+    tmpdir: py.path.local,
+) -> typing.Generator[None, None, None]:
     with patch.dict(
         os.environ,
         {

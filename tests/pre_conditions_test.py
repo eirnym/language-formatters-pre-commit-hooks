@@ -38,7 +38,9 @@ def test__is_command_success(success: bool) -> None:
 
 
 def test__ToolRequired(success: bool) -> None:
-    decorator = _ToolRequired(tool_name="test", check_command=lambda _: success, download_install_url="url")
+    decorator = _ToolRequired(
+        tool_name="test", check_command=lambda _: success, download_install_url="url"
+    )
     assert decorator.is_tool_installed() == success
 
     def throw_exception():
@@ -79,7 +81,9 @@ def test_tool_required(success, decorator, assert_content):
     if success:
         assert raised_exception is None
     else:
-        assert isinstance(raised_exception, ToolNotInstalled) and assert_content in str(raised_exception)
+        assert isinstance(raised_exception, ToolNotInstalled) and assert_content in str(
+            raised_exception
+        )
 
 
 @patch(
@@ -132,7 +136,11 @@ def test_get_jdk_version_with_java_not_installed(_) -> None:
     "language_formatters_pre_commit_hooks.pre_conditions.run_command",
     autospec=True,
 )
-def test_get_jdk_version(mock_run_comand: Mock, command_output: str, expected_result: typing.Union[Exception, Version]) -> None:
+def test_get_jdk_version(
+    mock_run_comand: Mock,
+    command_output: str,
+    expected_result: typing.Union[Exception, Version],
+) -> None:
     mock_run_comand.return_value = (0, "", command_output)
 
     if isinstance(expected_result, Exception):
@@ -145,13 +153,18 @@ def test_get_jdk_version(mock_run_comand: Mock, command_output: str, expected_re
         assert False, "We should never ever getting here"  # pragma: no cover
 
 
-@pytest.mark.parametrize("min_version_str, expected_error", (("11.0.0", False), ("15.0.0", False), ("16.0.0", True)))
+@pytest.mark.parametrize(
+    "min_version_str, expected_error",
+    (("11.0.0", False), ("15.0.0", False), ("16.0.0", True)),
+)
 @patch(
     "language_formatters_pre_commit_hooks.pre_conditions.get_jdk_version",
     autospec=True,
     return_value=Version("15.0.0"),
 )
-def test_assert_min_jdk_version(_: Mock, min_version_str: str, expected_error: bool) -> None:
+def test_assert_min_jdk_version(
+    _: Mock, min_version_str: str, expected_error: bool
+) -> None:
     version = Version(min_version_str)
 
     try:
@@ -180,7 +193,9 @@ def test_assert_min_jdk_version(_: Mock, min_version_str: str, expected_error: b
     autospec=True,
     return_value=Version("15.0.0"),
 )
-def test_assert_max_jdk_version(_: Mock, max_version_str: str, inclusive: bool, expected_error: bool) -> None:
+def test_assert_max_jdk_version(
+    _: Mock, max_version_str: str, inclusive: bool, expected_error: bool
+) -> None:
     version = Version(max_version_str)
 
     try:

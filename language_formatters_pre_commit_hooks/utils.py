@@ -11,7 +11,9 @@ from urllib.parse import urlparse
 import requests
 
 
-def run_command(*command: str, print_if_ok=True, print_command_exec=True) -> typing.Tuple[int, str, str]:
+def run_command(
+    *command: str, print_if_ok=True, print_command_exec=True
+) -> typing.Tuple[int, str, str]:
     if print_command_exec:
         print(
             "[cwd={cwd}] Run command: {command}".format(
@@ -28,7 +30,9 @@ def run_command(*command: str, print_if_ok=True, print_command_exec=True) -> typ
 
     if return_code != 0 or print_if_ok:
         print(
-            "[return_code={return_code}] | {output}\n\tstderr: {err}".format(return_code=return_code, output=stdout, err=stderr),
+            "[return_code={return_code}] | {output}\n\tstderr: {err}".format(
+                return_code=return_code, output=stdout, err=stderr
+            ),
             file=sys.stderr,
         )
     return return_code, stdout, stderr
@@ -64,7 +68,9 @@ def download_url(url: str, file_name: typing.Optional[str] = None) -> str:
         # via `pre-commit` as it would ensure that the directories
         # are present
         print(
-            "Unexisting base directory ({base_directory}). Creating it".format(base_directory=base_directory),
+            "Unexisting base directory ({base_directory}). Creating it".format(
+                base_directory=base_directory
+            ),
             file=sys.stderr,
         )
         os.makedirs(base_directory)
@@ -72,7 +78,9 @@ def download_url(url: str, file_name: typing.Optional[str] = None) -> str:
     print("Downloading {url}".format(url=url), file=sys.stderr)
     r = requests.get(url, stream=True)  # nosec B113/request_without_timeout: intentional to avoid issues on slow connections
     r.raise_for_status()
-    with tempfile.NamedTemporaryFile(dir=base_directory, delete=False) as tmp_file:  # Not delete because we're renaming it
+    with tempfile.NamedTemporaryFile(
+        dir=base_directory, delete=False
+    ) as tmp_file:  # Not delete because we're renaming it
         tmp_file_name = tmp_file.name
         shutil.copyfileobj(r.raw, tmp_file)
         tmp_file.flush()
@@ -94,7 +102,10 @@ def does_checksum_match(path: str, expected: str) -> bool:
         actual = hashlib.sha256(f.read()).hexdigest()
 
     if actual != expected:
-        print(f"Expected {path!r} to have checksum {expected!r} but got {actual!r}", file=sys.stderr)
+        print(
+            f"Expected {path!r} to have checksum {expected!r} but got {actual!r}",
+            file=sys.stderr,
+        )
         return False
 
     return True

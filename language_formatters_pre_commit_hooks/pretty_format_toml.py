@@ -9,7 +9,9 @@ from toml_sort.tomlsort import CommentConfiguration
 from toml_sort.tomlsort import FormattingConfiguration
 from toml_sort.tomlsort import SortConfiguration
 
-from language_formatters_pre_commit_hooks.utils import remove_trailing_whitespaces_and_set_new_line_ending
+from language_formatters_pre_commit_hooks.utils import (
+    remove_trailing_whitespaces_and_set_new_line_ending,
+)
 
 
 def pretty_format_toml(argv: typing.Optional[typing.List[str]] = None) -> int:
@@ -62,7 +64,9 @@ def pretty_format_toml(argv: typing.Optional[typing.List[str]] = None) -> int:
                     inline=True,
                     block=True,
                 ),
-                sort_config=SortConfiguration(tables=not args.no_sort, table_keys=not args.no_sort),
+                sort_config=SortConfiguration(
+                    tables=not args.no_sort, table_keys=not args.no_sort
+                ),
                 format_config=FormattingConfiguration(
                     spaces_before_inline_comment=args.inline_comment_spaces,
                     spaces_indent_inline_array=args.indent,
@@ -70,7 +74,9 @@ def pretty_format_toml(argv: typing.Optional[typing.List[str]] = None) -> int:
                 ),
             ).sorted()
 
-            prettified_content = remove_trailing_whitespaces_and_set_new_line_ending(prettified_content)
+            prettified_content = remove_trailing_whitespaces_and_set_new_line_ending(
+                prettified_content
+            )
             if string_content != prettified_content:
                 print("File {} is not pretty-formatted".format(toml_file))
 
