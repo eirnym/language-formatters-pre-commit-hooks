@@ -1,4 +1,0 @@
-[tool.black]
-include = '\.pyi?$'
-line-length = 141
-target-version = ['py36']
