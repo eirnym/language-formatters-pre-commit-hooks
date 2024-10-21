@@ -40,6 +40,7 @@ def pretty_format_rust(argv: typing.Optional[typing.List[str]] = None) -> int:
             args.filenames,
             print_command_exec=args.print_command_exec,
         )
+        return
 
     for manifest_root in args.manifest_root:
         manifest_path = os.path.join(manifest_root, "Cargo.toml")
